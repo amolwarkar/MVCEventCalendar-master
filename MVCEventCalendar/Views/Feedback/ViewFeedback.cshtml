@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MVCEventCalendar.Feedback>
+
+@{
+    Layout = null;
+}
+<center>
+    <h2>All Feedbacks</h2>
+</center>
+<span style="margin:6px"></span>
+
+<div style="margin:20%;margin-top:-30px">
+    <table class="table">
+        <tr style="background-color:#0094ff">
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feedback1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeedbackDate)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Feedback1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FeedbackDate)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>

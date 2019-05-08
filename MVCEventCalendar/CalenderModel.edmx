@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ClassroomAllocationSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminDetails">
+          <Key>
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookRooms">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="EmployeeNumber" />
+            <PropertyRef Name="ClassRoomId" />
+          </Key>
+          <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" />
+          <Property Name="ClassRoomId" Type="int" Nullable="false" />
+          <Property Name="Startdate" Type="date" Nullable="false" />
+          <Property Name="Endadate" Type="date" Nullable="false" />
+          <Property Name="Starttime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Endtime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Reason" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassRoomDetails">
+          <Key>
+            <PropertyRef Name="DetailsId" />
+            <PropertyRef Name="ResourceId" />
+            <PropertyRef Name="ClassroomId" />
+          </Key>
+          <Property Name="DetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResourceId" Type="int" Nullable="false" />
+          <Property Name="ResourceQuantity" Type="int" Nullable="false" />
+          <Property Name="ClassroomId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassRooms">
+          <Key>
+            <PropertyRef Name="ClassRoomId" />
+          </Key>
+          <Property Name="ClassRoomId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassRoomName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ClassroomImage" Type="varbinary(max)" />
+          <Property Name="SeatingCapacity" Type="int" />
+          <Property Name="BuildingName" Type="varchar" MaxLength="50" />
+          <Property Name="LevelNo" Type="int" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Start" Type="datetime" Nullable="false" />
+          <Property Name="End" Type="datetime" Nullable="false" />
+          <Property Name="IsfullDay" Type="bit" Nullable="false" />
+          <Property Name="ClassRoomId" Type="int" />
+          <Property Name="Employeeid" Type="int" />
+        </EntityType>
+        <EntityType Name="Feedbacks">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" />
+          <Property Name="Feedback" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FeedbackDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="Question" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Resources">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResourceName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserQuestionDetails">
+          <Key>
+            <PropertyRef Name="UserQuestionId" />
+          </Key>
+          <Property Name="UserQuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpoyeeNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRegistrationDetails">
+          <Key>
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" />
+          <Property Name="EmployeeName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ContactNumber" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BookRoom_ClassRoom_Details">
+          <End Role="ClassRooms" Type="Self.ClassRooms" Multiplicity="1" />
+          <End Role="BookRooms" Type="Self.BookRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassRooms">
+              <PropertyRef Name="ClassRoomId" />
+            </Principal>
+            <Dependent Role="BookRooms">
+              <PropertyRef Name="ClassRoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookRooms_UserRegistrationDetails">
+          <End Role="UserRegistrationDetails" Type="Self.UserRegistrationDetails" Multiplicity="1" />
+          <End Role="BookRooms" Type="Self.BookRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRegistrationDetails">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="BookRooms">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassRoomDetails_ClassRooms">
+          <End Role="ClassRooms" Type="Self.ClassRooms" Multiplicity="1" />
+          <End Role="ClassRoomDetails" Type="Self.ClassRoomDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassRooms">
+              <PropertyRef Name="ClassRoomId" />
+            </Principal>
+            <Dependent Role="ClassRoomDetails">
+              <PropertyRef Name="ClassroomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassRoomDetails_Resource">
+          <End Role="Resources" Type="Self.Resources" Multiplicity="1" />
+          <End Role="ClassRoomDetails" Type="Self.ClassRoomDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resources">
+              <PropertyRef Name="ResourceId" />
+            </Principal>
+            <Dependent Role="ClassRoomDetails">
+              <PropertyRef Name="ResourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_ClassRooms">
+          <End Role="ClassRooms" Type="Self.ClassRooms" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassRooms">
+              <PropertyRef Name="ClassRoomId" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="ClassRoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedbacks_UserRegistrationDetails">
+          <End Role="UserRegistrationDetails" Type="Self.UserRegistrationDetails" Multiplicity="1" />
+          <End Role="Feedbacks" Type="Self.Feedbacks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRegistrationDetails">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="Feedbacks">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserQuestionDetails_Questions">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="UserQuestionDetails" Type="Self.UserQuestionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="UserQuestionDetails">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserQuestionDetails_UserRegistrationDetails">
+          <End Role="UserRegistrationDetails" Type="Self.UserRegistrationDetails" Multiplicity="1" />
+          <End Role="UserQuestionDetails" Type="Self.UserQuestionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRegistrationDetails">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="UserQuestionDetails">
+              <PropertyRef Name="EmpoyeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="getAllRooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetFeedback" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetFeedbacks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetResource" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="quantity1" Type="int" Mode="In" />
+          <Parameter Name="quantity2" Type="int" Mode="In" />
+          <Parameter Name="quantity3" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetResourcebyName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="quantity1" Type="int" Mode="In" />
+          <Parameter Name="quantity2" Type="int" Mode="In" />
+          <Parameter Name="quantity3" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ValidateBookingClassroom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="ClassroomId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ClassroomAllocationSystemModelStoreContainer">
+          <EntitySet Name="AdminDetails" EntityType="Self.AdminDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookRooms" EntityType="Self.BookRooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassRoomDetails" EntityType="Self.ClassRoomDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassRooms" EntityType="Self.ClassRooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedbacks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resources" EntityType="Self.Resources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserQuestionDetails" EntityType="Self.UserQuestionDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRegistrationDetails" EntityType="Self.UserRegistrationDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BookRoom_ClassRoom_Details" Association="Self.FK_BookRoom_ClassRoom_Details">
+            <End Role="ClassRooms" EntitySet="ClassRooms" />
+            <End Role="BookRooms" EntitySet="BookRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookRooms_UserRegistrationDetails" Association="Self.FK_BookRooms_UserRegistrationDetails">
+            <End Role="UserRegistrationDetails" EntitySet="UserRegistrationDetails" />
+            <End Role="BookRooms" EntitySet="BookRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassRoomDetails_ClassRooms" Association="Self.FK_ClassRoomDetails_ClassRooms">
+            <End Role="ClassRooms" EntitySet="ClassRooms" />
+            <End Role="ClassRoomDetails" EntitySet="ClassRoomDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassRoomDetails_Resource" Association="Self.FK_ClassRoomDetails_Resource">
+            <End Role="Resources" EntitySet="Resources" />
+            <End Role="ClassRoomDetails" EntitySet="ClassRoomDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_ClassRooms" Association="Self.FK_Events_ClassRooms">
+            <End Role="ClassRooms" EntitySet="ClassRooms" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedbacks_UserRegistrationDetails" Association="Self.FK_Feedbacks_UserRegistrationDetails">
+            <End Role="UserRegistrationDetails" EntitySet="UserRegistrationDetails" />
+            <End Role="Feedbacks" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserQuestionDetails_Questions" Association="Self.FK_UserQuestionDetails_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="UserQuestionDetails" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserQuestionDetails_UserRegistrationDetails" Association="Self.FK_UserQuestionDetails_UserRegistrationDetails">
+            <End Role="UserRegistrationDetails" EntitySet="UserRegistrationDetails" />
+            <End Role="UserQuestionDetails" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClassroomAllocationSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminDetail">
+          <Key>
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookRoom">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="EmployeeNumber" />
+            <PropertyRef Name="ClassRoomId" />
+          </Key>
+          <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
+          <Property Name="ClassRoomId" Type="Int32" Nullable="false" />
+          <Property Name="Startdate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Endadate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Starttime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Endtime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Reason" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ClassRoom" Relationship="Self.FK_BookRoom_ClassRoom_Details" FromRole="BookRooms" ToRole="ClassRooms" />
+          <NavigationProperty Name="UserRegistrationDetail" Relationship="Self.FK_BookRooms_UserRegistrationDetails" FromRole="BookRooms" ToRole="UserRegistrationDetails" />
+        </EntityType>
+        <EntityType Name="ClassRoomDetail">
+          <Key>
+            <PropertyRef Name="DetailsId" />
+            <PropertyRef Name="ResourceId" />
+            <PropertyRef Name="ClassroomId" />
+          </Key>
+          <Property Name="DetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResourceId" Type="Int32" Nullable="false" />
+          <Property Name="ResourceQuantity" Type="Int32" Nullable="false" />
+          <Property Name="ClassroomId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClassRoom" Relationship="Self.FK_ClassRoomDetails_ClassRooms" FromRole="ClassRoomDetails" ToRole="ClassRooms" />
+          <NavigationProperty Name="Resource" Relationship="Self.FK_ClassRoomDetails_Resource" FromRole="ClassRoomDetails" ToRole="Resources" />
+        </EntityType>
+        <EntityType Name="ClassRoom">
+          <Key>
+            <PropertyRef Name="ClassRoomId" />
+          </Key>
+          <Property Name="ClassRoomId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassRoomName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClassroomImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="SeatingCapacity" Type="Int32" />
+          <Property Name="BuildingName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LevelNo" Type="Int32" />
+          <NavigationProperty Name="BookRooms" Relationship="Self.FK_BookRoom_ClassRoom_Details" FromRole="ClassRooms" ToRole="BookRooms" />
+          <NavigationProperty Name="ClassRoomDetails" Relationship="Self.FK_ClassRoomDetails_ClassRooms" FromRole="ClassRooms" ToRole="ClassRoomDetails" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Events_ClassRooms" FromRole="ClassRooms" ToRole="Events" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="End" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsfullDay" Type="Boolean" Nullable="false" />
+          <Property Name="ClassRoomId" Type="Int32" />
+          <Property Name="Employeeid" Type="Int32" />
+          <NavigationProperty Name="ClassRoom" Relationship="Self.FK_Events_ClassRooms" FromRole="Events" ToRole="ClassRooms" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
+          <Property Name="Feedback1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FeedbackDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="UserRegistrationDetail" Relationship="Self.FK_Feedbacks_UserRegistrationDetails" FromRole="Feedbacks" ToRole="UserRegistrationDetails" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Question1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserQuestionDetails" Relationship="Self.FK_UserQuestionDetails_Questions" FromRole="Questions" ToRole="UserQuestionDetails" />
+        </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResourceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ClassRoomDetails" Relationship="Self.FK_ClassRoomDetails_Resource" FromRole="Resources" ToRole="ClassRoomDetails" />
+        </EntityType>
+        <EntityType Name="UserQuestionDetail">
+          <Key>
+            <PropertyRef Name="UserQuestionId" />
+          </Key>
+          <Property Name="UserQuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpoyeeNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_UserQuestionDetails_Questions" FromRole="UserQuestionDetails" ToRole="Questions" />
+          <NavigationProperty Name="UserRegistrationDetail" Relationship="Self.FK_UserQuestionDetails_UserRegistrationDetails" FromRole="UserQuestionDetails" ToRole="UserRegistrationDetails" />
+        </EntityType>
+        <EntityType Name="UserRegistrationDetail">
+          <Key>
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BookRooms" Relationship="Self.FK_BookRooms_UserRegistrationDetails" FromRole="UserRegistrationDetails" ToRole="BookRooms" />
+          <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedbacks_UserRegistrationDetails" FromRole="UserRegistrationDetails" ToRole="Feedbacks" />
+          <NavigationProperty Name="UserQuestionDetails" Relationship="Self.FK_UserQuestionDetails_UserRegistrationDetails" FromRole="UserRegistrationDetails" ToRole="UserQuestionDetails" />
+        </EntityType>
+        <Association Name="FK_BookRoom_ClassRoom_Details">
+          <End Role="ClassRooms" Type="Self.ClassRoom" Multiplicity="1" />
+          <End Role="BookRooms" Type="Self.BookRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassRooms">
+              <PropertyRef Name="ClassRoomId" />
+            </Principal>
+            <Dependent Role="BookRooms">
+              <PropertyRef Name="ClassRoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookRooms_UserRegistrationDetails">
+          <End Role="UserRegistrationDetails" Type="Self.UserRegistrationDetail" Multiplicity="1" />
+          <End Role="BookRooms" Type="Self.BookRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRegistrationDetails">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="BookRooms">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassRoomDetails_ClassRooms">
+          <End Role="ClassRooms" Type="Self.ClassRoom" Multiplicity="1" />
+          <End Role="ClassRoomDetails" Type="Self.ClassRoomDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassRooms">
+              <PropertyRef Name="ClassRoomId" />
+            </Principal>
+            <Dependent Role="ClassRoomDetails">
+              <PropertyRef Name="ClassroomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassRoomDetails_Resource">
+          <End Role="Resources" Type="Self.Resource" Multiplicity="1" />
+          <End Role="ClassRoomDetails" Type="Self.ClassRoomDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resources">
+              <PropertyRef Name="ResourceId" />
+            </Principal>
+            <Dependent Role="ClassRoomDetails">
+              <PropertyRef Name="ResourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_ClassRooms">
+          <End Role="ClassRooms" Type="Self.ClassRoom" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassRooms">
+              <PropertyRef Name="ClassRoomId" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="ClassRoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedbacks_UserRegistrationDetails">
+          <End Role="UserRegistrationDetails" Type="Self.UserRegistrationDetail" Multiplicity="1" />
+          <End Role="Feedbacks" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRegistrationDetails">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="Feedbacks">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserQuestionDetails_Questions">
+          <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+          <End Role="UserQuestionDetails" Type="Self.UserQuestionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="UserQuestionDetails">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserQuestionDetails_UserRegistrationDetails">
+          <End Role="UserRegistrationDetails" Type="Self.UserRegistrationDetail" Multiplicity="1" />
+          <End Role="UserQuestionDetails" Type="Self.UserQuestionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRegistrationDetails">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="UserQuestionDetails">
+              <PropertyRef Name="EmpoyeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClassroomAllocationSystemEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminDetails" EntityType="Self.AdminDetail" />
+          <EntitySet Name="BookRooms" EntityType="Self.BookRoom" />
+          <EntitySet Name="ClassRoomDetails" EntityType="Self.ClassRoomDetail" />
+          <EntitySet Name="ClassRooms" EntityType="Self.ClassRoom" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="Resources" EntityType="Self.Resource" />
+          <EntitySet Name="UserQuestionDetails" EntityType="Self.UserQuestionDetail" />
+          <EntitySet Name="UserRegistrationDetails" EntityType="Self.UserRegistrationDetail" />
+          <AssociationSet Name="FK_BookRoom_ClassRoom_Details" Association="Self.FK_BookRoom_ClassRoom_Details">
+            <End Role="ClassRooms" EntitySet="ClassRooms" />
+            <End Role="BookRooms" EntitySet="BookRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookRooms_UserRegistrationDetails" Association="Self.FK_BookRooms_UserRegistrationDetails">
+            <End Role="UserRegistrationDetails" EntitySet="UserRegistrationDetails" />
+            <End Role="BookRooms" EntitySet="BookRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassRoomDetails_ClassRooms" Association="Self.FK_ClassRoomDetails_ClassRooms">
+            <End Role="ClassRooms" EntitySet="ClassRooms" />
+            <End Role="ClassRoomDetails" EntitySet="ClassRoomDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassRoomDetails_Resource" Association="Self.FK_ClassRoomDetails_Resource">
+            <End Role="Resources" EntitySet="Resources" />
+            <End Role="ClassRoomDetails" EntitySet="ClassRoomDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_ClassRooms" Association="Self.FK_Events_ClassRooms">
+            <End Role="ClassRooms" EntitySet="ClassRooms" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedbacks_UserRegistrationDetails" Association="Self.FK_Feedbacks_UserRegistrationDetails">
+            <End Role="UserRegistrationDetails" EntitySet="UserRegistrationDetails" />
+            <End Role="Feedbacks" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserQuestionDetails_Questions" Association="Self.FK_UserQuestionDetails_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="UserQuestionDetails" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserQuestionDetails_UserRegistrationDetails" Association="Self.FK_UserQuestionDetails_UserRegistrationDetails">
+            <End Role="UserRegistrationDetails" EntitySet="UserRegistrationDetails" />
+            <End Role="UserQuestionDetails" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+          <FunctionImport Name="getAllRooms" ReturnType="Collection(ClassroomAllocationSystemModel.getAllRooms_Result)" />
+          <FunctionImport Name="GetFeedback" ReturnType="Collection(ClassroomAllocationSystemModel.GetFeedback_Result)" />
+          <FunctionImport Name="GetFeedbacks" ReturnType="Collection(ClassroomAllocationSystemModel.GetFeedbacks_Result)" />
+          <FunctionImport Name="GetResource" ReturnType="Collection(Int32)">
+            <Parameter Name="quantity1" Mode="In" Type="Int32" />
+            <Parameter Name="quantity2" Mode="In" Type="Int32" />
+            <Parameter Name="quantity3" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetResourcebyName" ReturnType="Collection(String)">
+            <Parameter Name="quantity1" Mode="In" Type="Int32" />
+            <Parameter Name="quantity2" Mode="In" Type="Int32" />
+            <Parameter Name="quantity3" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ValidateBookingClassroom" ReturnType="Collection(Int32)">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ClassroomId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="getAllRooms_Result">
+          <Property Type="Int32" Name="ClassRoomId" Nullable="false" />
+          <Property Type="String" Name="ClassRoomName" Nullable="false" MaxLength="20" />
+          <Property Type="Binary" Name="ClassroomImage" Nullable="true" />
+          <Property Type="Int32" Name="SeatingCapacity" Nullable="true" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="LevelNo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetFeedback_Result">
+          <Property Type="Int32" Name="EmployeeNumber" Nullable="false" />
+          <Property Type="String" Name="Feedback" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetFeedbacks_Result">
+          <Property Type="Int32" Name="employeenumber" Nullable="false" />
+          <Property Type="String" Name="Feedback" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="feedbackdate" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClassroomAllocationSystemModelStoreContainer" CdmEntityContainer="ClassroomAllocationSystemEntities1">
+          <EntitySetMapping Name="AdminDetails">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.AdminDetail">
+              <MappingFragment StoreEntitySet="AdminDetails">
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookRooms">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.BookRoom">
+              <MappingFragment StoreEntitySet="BookRooms">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="ClassRoomId" ColumnName="ClassRoomId" />
+                <ScalarProperty Name="Startdate" ColumnName="Startdate" />
+                <ScalarProperty Name="Endadate" ColumnName="Endadate" />
+                <ScalarProperty Name="Starttime" ColumnName="Starttime" />
+                <ScalarProperty Name="Endtime" ColumnName="Endtime" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassRoomDetails">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.ClassRoomDetail">
+              <MappingFragment StoreEntitySet="ClassRoomDetails">
+                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="ResourceQuantity" ColumnName="ResourceQuantity" />
+                <ScalarProperty Name="ClassroomId" ColumnName="ClassroomId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassRooms">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.ClassRoom">
+              <MappingFragment StoreEntitySet="ClassRooms">
+                <ScalarProperty Name="ClassRoomId" ColumnName="ClassRoomId" />
+                <ScalarProperty Name="ClassRoomName" ColumnName="ClassRoomName" />
+                <ScalarProperty Name="ClassroomImage" ColumnName="ClassroomImage" />
+                <ScalarProperty Name="SeatingCapacity" ColumnName="SeatingCapacity" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="LevelNo" ColumnName="LevelNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="End" ColumnName="End" />
+                <ScalarProperty Name="IsfullDay" ColumnName="IsfullDay" />
+                <ScalarProperty Name="ClassRoomId" ColumnName="ClassRoomId" />
+                <ScalarProperty Name="Employeeid" ColumnName="Employeeid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedbacks">
+                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="Feedback1" ColumnName="Feedback" />
+                <ScalarProperty Name="FeedbackDate" ColumnName="FeedbackDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.Question">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Question1" ColumnName="Question" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resources">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.Resource">
+              <MappingFragment StoreEntitySet="Resources">
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserQuestionDetails">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.UserQuestionDetail">
+              <MappingFragment StoreEntitySet="UserQuestionDetails">
+                <ScalarProperty Name="UserQuestionId" ColumnName="UserQuestionId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="EmpoyeeNumber" ColumnName="EmpoyeeNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRegistrationDetails">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.UserRegistrationDetail">
+              <MappingFragment StoreEntitySet="UserRegistrationDetails">
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getAllRooms" FunctionName="ClassroomAllocationSystemModel.Store.getAllRooms">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClassroomAllocationSystemModel.getAllRooms_Result">
+                <ScalarProperty Name="ClassRoomId" ColumnName="ClassRoomId" />
+                <ScalarProperty Name="ClassRoomName" ColumnName="ClassRoomName" />
+                <ScalarProperty Name="ClassroomImage" ColumnName="ClassroomImage" />
+                <ScalarProperty Name="SeatingCapacity" ColumnName="SeatingCapacity" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="LevelNo" ColumnName="LevelNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetFeedback" FunctionName="ClassroomAllocationSystemModel.Store.GetFeedback">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClassroomAllocationSystemModel.GetFeedback_Result">
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetFeedbacks" FunctionName="ClassroomAllocationSystemModel.Store.GetFeedbacks">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClassroomAllocationSystemModel.GetFeedbacks_Result">
+                <ScalarProperty Name="employeenumber" ColumnName="employeenumber" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+                <ScalarProperty Name="feedbackdate" ColumnName="feedbackdate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetResource" FunctionName="ClassroomAllocationSystemModel.Store.GetResource" />
+          <FunctionImportMapping FunctionImportName="GetResourcebyName" FunctionName="ClassroomAllocationSystemModel.Store.GetResourcebyName" />
+          <FunctionImportMapping FunctionImportName="ValidateBookingClassroom" FunctionName="ClassroomAllocationSystemModel.Store.ValidateBookingClassroom" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,86 @@
+﻿<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+<style>
+    *{
+        margin:0px;
+        padding:0px;
+        font-family:'Times New Roman'
+    }
+    #sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: black;
+        color: white;
+        overflow-x: hidden;
+        padding-top: 20px;
+        padding-left: 5px;
+       
+    }
+        #sidenav a
+        {
+            /*padding:6px, 8px,6px,16px;*/
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            padding: 12px;
+        }
+            #sidenav a:hover
+            {
+                color: #f1f1f1;
+            }
+
+    .body1
+    {
+        margin-left: 200px;
+        font-size: 20px;
+        padding: 0px,10px;
+    }
+
+   
+
+</style>
+
+<body class="body1" style="position:absolute;background-size:cover;">
+    <section class="col-md-1" id="sidenav">
+        <ul>
+            <li>
+                @Ajax.ActionLink("Resource", "AddResource", new AjaxOptions {
+               HttpMethod="GET",
+               UpdateTargetId = "div2",
+               InsertionMode =InsertionMode.Replace
+
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("Classroom", "Image","Image", new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div2"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("ClassroomDetails", "AddClassroomDetails","ClassroomDetails", new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div2"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("Feedback", "ViewFeedback","Feedback", new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div2"
+           })
+            </li>
+        </ul>
+    </section>
+    <div id="div2" style="background-color:white;height:500px;margin-top:20px;">
+    </div>
+</body>

@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <title>Classroom Allocation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="~/Content/MyScripts/MyJavaScript.js"></script>
+    @*<link rel="stylesheet" href="~/Content/Css/MyStyleSheet.css" />*@
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+
+    <nav class="navbar-inverse" style="background-color:black;padding:7px">
+        <div class="container-fluid">
+            <img src="~/Content/Images/cas2.png" style="height:70px;width:90px;margin:-10px" class="navbar-brand" />
+            <div class="navbar-header navHover">
+                <a class="navbar-brand" href="#" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white"><b>Classroom Allocation System</b></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="navHover"><a href="@Url.Action("Index","Home")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Home</strong></a></li>
+
+                <li class="navHover"><a href="@Url.Action("About","Home")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">About</strong></a></li>
+                @if (Session["Username"] != null)
+                {
+                    //if (Session["Username"].ToString() != "admin")
+                    //{
+                        <li class="navHover"><a href="@Url.Action("GiveFeedback", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Give Feedback</strong></a></li>
+                    
+                
+                        <li class="navHover"><a href="@Url.Action("UserLogin", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Book Room</strong></a></li>
+                        <li class="navHover"><a href="@Url.Action("AllRooms", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">All Rooms</strong></a></li>
+                        <li class="navHover"><a href="@Url.Action("BookRoomByRequirements", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Book Classoom By Requirement</strong></a></li>
+                    
+                }
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                @if (Session["Username"] == null)
+                {
+                    @*Start Login Modal*@
+                    <li class="navHover">
+                        <a href="#" data-toggle="modal" data-target="#myModal1"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white"><span class="glyphicon glyphicon-log-in"></span>  Login  </strong></a>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal1" role="dialog">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Login</h4>
+                                    </div>
+
+                                    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { onsubmit = "return ValidateLogin();" }))
+                                    {
+                                        <div class="modal-body">
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="form-horizontal">
+
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                                                <div class="form-group">
+                                                    @Html.Label("Username", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @*@Html.Editor("Username", new { htmlAttributes = new {id="Username", @class = "form-control" } })*@
+                                                        <input type="text" id="Username" name="Username" class="form-control" required/>
+                                                        <span id="username_error" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @*@Html.Editor("Password", new { htmlAttributes = new {id="Password", @class = "form-control" } })*@
+                                                        <input type="password" id="Password" name="Password" class="form-control" required/>
+                                                        <span id="password_error" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div style="margin-left:10px">
+
+                                                @Html.ActionLink("Forgot Password ?", "ForgotPass", "Home")
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" value="Login" class="btn btn-success" />
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    @*End Modal*@
+
+
+                    @*Start Registeration Modal*@
+                    <li style="margin-right:10px" class="navHover">
+                        <a href="#" data-toggle="modal" data-target="#myRegisterModal"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white"><span class="glyphicon glyphicon-user"></span>  Register  </strong></a>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myRegisterModal" role="dialog">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Registration</h4>
+                                    </div>
+
+                                    @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { onsubmit = "return ValidateRegistration();" }))
+                                    {
+                                        <div class="form-group">
+                                            @Html.Label("Employee Number :", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
+                                            <div class="col-md-6">
+                                                <input type="number" id="EmployeeNumber" name="EmployeeNumber" class="form-control" required min="100000" max="150000" />
+                                                <span id="employeeNumber_error" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.Label("Employee Name :", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
+                                            <div class="col-md-6">
+                                                <input type="text" id="EmployeeName" name="EmployeeName" class="form-control" required />
+                                                <span id="employeeName_error" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.Label("Contact Number :", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
+                                            <div class="col-md-6">
+                                                <input type="number" id="ContactNumber" name="ContactNumber" class="form-control" required />
+                                                <span id="contactNumber_error" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.Label("Username :", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
+                                            <div class="col-md-6">
+                                                <input type="text" id="NewUsername" name="NewUsername" class="form-control"  required maxlength="30"/>
+                                                <span id="username_error" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <br />
+
+                                        <div class="form-group">
+                                            @Html.Label("Password :", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
+                                            <div class="col-md-6">
+                                                <input type="Password" id="Pass" name="Pass" class="form-control"  required />
+                                                <span id="password_error" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <br />
+
+                                        <div class="form-group">
+                                            @Html.Label("Confirm Password :", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
+                                            <div class="col-md-6">
+                                                <input type="Password" id="ConfirmPass" name="ConfirmPass" class="form-control" required/>
+                                                <span id="ConfirmPass_error" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+
+                                        <div class="form-group">    
+                                            @Html.Label("Select Question", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
+                                            <div class="col-md-3">
+                                                @Html.DropDownList("AllQuestions",( IEnumerable<SelectListItem>)ViewBag.AllQuestions, "---Select Question---",new { @class= "form-control",@style="width:300px;", required="required" })
+                                                <span id="Dropdown_error" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+
+                                        <div class="form-group">
+                                            @Html.Label("Answer", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
+                                            <div class="col-md-6">
+                                                <input type="text" id="Answer" name="Answer" class="form-control" required />
+                                                <span id="Answer_error" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+
+
+                                        <div class="modal-footer">
+                                            <input type="submit" value="Register" id="register" class="btn btn-primary" />
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                    @*End Modal*@
+                }
+                else
+                {
+                    <li>
+                        <span class="btn btn-danger btn-sm" style="margin-top:8px;margin-right:10px"><a href="@Url.Action("LogoutSystem","Home")" style="color:white;">Logout</a></span>
+                    </li>
+                }
+
+
+
+            </ul>
+        </div>
+    </nav>
+    @* End Navbar Here *@
+
+    <div class=" body-content">
+        @RenderBody()
+
+
+        <!-- Footer -->
+        <footer style="background-color:black;padding:15px;">
+
+            <!-- Footer Elements -->
+            <div class="container">
+            </div>
+            <!-- Footer Elements -->
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3" style="color:white;padding-top:20px;">
+                © 2019 Copyright:
+                <a href="#" style="color:yellowgreen">Classroom Allocation System</a>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+        <!-- Footer -->
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

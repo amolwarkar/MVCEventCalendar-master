@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Feedback of all Users";
+}
+
+@*@using (Html.BeginForm("ViewFeedback","Feedback",FormMethod.Get))
+    {*@
+<body @*style="background-size:cover;position:absolute; background-image:url('/Content/Images/bench.jpg')"*@>
+    <h2>Feedback of all Users</h2>
+    <div>
+        <table id="table1">
+            <tr>
+                <th>Employee Number</th>
+                <th>Feedback</th>
+            </tr>
+            @foreach (var items in ViewBag.AllFeedback)
+            {
+                <tr>
+                    <td>
+                        @items.EmployeeNumber
+                    </td>
+                    <td>
+                        @items.Feedback
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    @*//}*@
+    <div>
+        @Html.ActionLink("Back", "Welcome", "Resource")
+    </div>
+</body>
+<style>
+    #table1 {
+        width: 100%;
+    }
+
+        #table1 th {
+            color: white;
+            background-color: black;
+        }
+
+    table, th, td {
+        border: 1px,solid,black;
+    }
+
+    table, th, td {
+        border: 1px,solid,black;
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px,solid,black;
+        border-collapse: collapse;
+    }
+
+    #table1 tr:nth-child(odd) {
+        background-color: #eee;
+    }
+
+    #table1 tr:nth-child(even) {
+        background-color: #fff;
+    }
+
+    div {
+        align-content: center;
+    }
+
+    th, td {
+        padding: 20px;
+    }
+</style>
+

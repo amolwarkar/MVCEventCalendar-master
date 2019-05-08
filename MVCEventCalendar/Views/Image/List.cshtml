@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MVCEventCalendar.ClassRoom>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassRoomName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassroomImage)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassRoomName)
+        </td>
+        <td>
+            <input type="image" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ClassroomImage))" name="ClassroomImage" />
+
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ClassRoomId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ClassRoomId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ClassRoomId })
+        </td>
+    </tr>
+}
+
+</table>

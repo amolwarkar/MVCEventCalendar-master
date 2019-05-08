@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MVCEventCalendar.ClassRoom>
+
+<center>
+    <h2>All Available Rooms</h2>
+</center>
+<div class="" style="margin:5%;">
+    <table class="table table-bordered" style="border-color:#0094ff;padding:20%;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:20px; ">
+        <tr style="background-color:#0094ff">
+            <th>
+                @Html.DisplayName("Classroom Name")
+            </th>
+            <th>
+                @Html.DisplayName("Seating Capacity")
+            </th>
+            <th>
+                @Html.DisplayName("Building Name")
+            </th>
+            <th>
+                @Html.DisplayName("Level Number")
+            </th>
+          
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassRoomName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeatingCapacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BuildingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LevelNo)
+                </td>
+              
+
+            </tr>
+        }
+
+    </table>
+</div>

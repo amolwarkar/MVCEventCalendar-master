@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MVCEventCalendar.Resource>
+
+@{
+    ViewBag.Title = "BookRoomByRequirements";
+}
+
+<center><h2> Select Requirements</h2></center>
+<div style="margin:40%;margin-top:10px">
+    @using (Html.BeginForm("BookRoomByRequirementsCalender", "User", FormMethod.Post))
+    {
+        <table class="table table-bordered">
+            <tr style="background-color:#0094ff">
+                <th>
+                    @Html.DisplayName("Resource Name")
+                </th>
+                <th>
+                    Select Quantities
+                </th>
+            </tr>
+            <tr>
+                <td class="col-md-2" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                    <strong>Chairs</strong>
+                </td>
+                <td class="col-md-3">
+                    <input type="number" name="chairs" class="form-control" value="0" min="0" max="120" />
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-2" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                    <strong>PC</strong>
+                </td>
+                <td class="col-md-3">
+                    <input type="number" name="pcs" class="form-control" value="0" min="0" max="120" />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-2" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                    <strong>Projectors</strong>
+                </td>
+                <td class="col-md-3">
+                    <input type="number" name="projectors" class="form-control" value="0" min="0" max="120" />
+                </td>
+            </tr>
+
+        </table>
+
+        <input type="submit" value="Search & Book Classroom" class="btn btn-success" />
+    }
+</div>
+

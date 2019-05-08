@@ -1,0 +1,34 @@
+﻿<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@model MVCEventCalendar.Resource
+
+@using (Ajax.BeginForm("DeleteResources", "Admin", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "div1"
+}))
+{
+    <center style="margin-top:30px; margin-left:100px">
+        @Html.AntiForgeryToken()
+        <div style="align-content:center; border:1px solid black; width:600px; background-color:#0094ff ; color:white">
+            <marquee direction="left"><h3>All Resources</h3></marquee>
+        </div>
+        <div style="border:1px solid black; width:600px">
+            <dl class="dl-horizontal" style="padding:30px">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ResourceName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ResourceName)
+                </dd>
+
+            </dl>
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Home", "Welcome", new { @class = "btn btn-danger" })
+            </div>
+        </div>
+        </center>
+        }

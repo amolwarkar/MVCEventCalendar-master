@@ -1,0 +1,55 @@
+﻿<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@{ 
+    Layout = null;
+}
+@model IEnumerable<MVCEventCalendar.Resource>
+
+@using (Html.BeginForm("AddResource", "Admin", FormMethod.Post))
+            {
+<center style = "margin-top:30px;" >
+     @Html.AntiForgeryToken()
+     <div style = "align-content:center; width:600px; color:black" >
+
+
+          <h3> Add Resource </h3 >
+
+
+         </div>
+
+
+         <div style = "border:1px solid black; width:600px" >
+
+
+              <div class="form-horizontal " style="padding:30px;">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.Label("Resource Name", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-4">
+                    <input type="text" required name="ResourceName" class="form-control" style="width:180px" />
+                    @*@Html.ValidationMessageFor(model => model.ResourceName, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Add Resource" class="btn btn-warning" style="margin-right:30px" />
+                    @Html.ActionLink("Home", "Welcome", "Admin", new { @class = "btn btn-danger" })
+                    @*@Ajax.ActionLink("Show Resources", "List","Admin", new AjaxOptions {
+        HttpMethod ="GET",
+        UpdateTargetId="div1",
+        InsertionMode=InsertionMode.Replace}, new { @class = "btn btn-primary" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</center>
+    }
+
+
+
+
+<div id="div4" style="height:300px;background-color:white;margin-left:170px"></div>
+

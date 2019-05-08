@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MVCEventCalendar.ClassRoomDetail>
+
+@{
+    ViewBag.Title = "List";
+}
+<style>
+    #table1 tr:nth-child(odd) {
+        background-color: #eee;
+    }
+
+    #table1 tr:nth-child(even) {
+        background-color: #fff;
+    }
+</style>
+<body>
+    <div>
+        <div style="align-content:center;   width:800px; color:black">
+           <h3>Add Classroom Details</h3>
+        </div>
+        <div style="margin-left:40px">
+            <table id="table1" class="table table-bordered">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClassroomId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ResourceQuantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Resource.ResourceName)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClassroomId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ResourceQuantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Resource.ResourceName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Update", "UpdateClassroomDetails", new { id = item.DetailsId }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Delete", "DeleteClassRoomDetails", new { id = item.DetailsId }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        @Html.ActionLink("Home", "Welcome", "Admin", null, new { @class = "btn btn-danger" })
+    </div>
+</body>

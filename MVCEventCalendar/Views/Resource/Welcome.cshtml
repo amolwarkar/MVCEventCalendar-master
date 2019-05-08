@@ -1,0 +1,137 @@
+﻿<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@{
+    ViewBag.Title = "Welcome";
+}
+
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        font-family: 'Times New Roman';
+    }
+
+    #sidenav {
+        height: 100%;
+        width: 260px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: black;
+        color: white;
+        overflow-x: hidden;
+        padding-top: 20px;
+        padding-left: 5px;
+        margin-top: 50px;
+    }
+
+        #sidenav a {
+            /*padding:6px, 8px,6px,16px;*/
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            padding: 12px;
+        }
+
+            #sidenav a:hover {
+                color: #f1f1f1;
+            }
+
+    .body1 {
+        margin-left: 260px;
+        font-size: 10px;
+        padding: 0px,10px;
+    }
+
+    /*#sidenav ul li {
+      list-style:none;
+    }*/
+   section ul li{
+        list-style:none;
+    }
+</style>
+<body>
+    <section class="col-md-1" id="sidenav">
+        <ul>
+            <li>
+                @Ajax.ActionLink("Add Resources", "AddResources", new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "div1"
+                })
+            </li>
+            <li>
+                @Ajax.ActionLink("Delete Resource", "DeleteResource", new AjaxOptions
+           {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div1"
+           })
+            </li>
+
+            <li>
+                @Ajax.ActionLink("Add Classroom", "Image", "Image", new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div1"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("List of all Classroom", "List", "Image", new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div1"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("Delete Classroom", "DeleteClassroom", "Image", new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div1"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("Update Classroom","UpadateClassroom", "Image", new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div1"
+           })
+            </li>
+
+            <li>
+                @Ajax.ActionLink("Add Classroom Details", "AddClassroomDetails","ClassroomDetails",new AjaxOptions {
+                HttpMethod="GET",
+                InsertionMode=InsertionMode.Replace,
+                UpdateTargetId="div1"
+            })
+            </li>
+            <li>
+                @Ajax.ActionLink("Delete Classroom Details", "DeleteClassroomDetails", "ClassroomDetails",new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div1"
+           })
+            </li>
+            @*<li>
+                     @Ajax.ActionLink("Update Classroom Details", "UpdateClassroomDetails", "ClassroomDetails",new AjaxOptions {
+                    HttpMethod="GET",
+                    InsertionMode=InsertionMode.Replace,
+                    UpdateTargetId="div1"
+                })
+                 </li>*@
+            <li>
+                @Ajax.ActionLink("View Feedback", "Index", "Feedback",new AjaxOptions {
+               HttpMethod="GET",
+               InsertionMode=InsertionMode.Replace,
+               UpdateTargetId="div1"
+           })
+            </li>
+        </ul>
+    </section>
+
+    <div id="div1"></div>
+
+</body>

@@ -1,0 +1,33 @@
+﻿
+@model IEnumerable<MVCEventCalendar.Resource>
+
+
+<div style="margin:20%;margin-top:-10px">
+    <h3 style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Resources</h3>
+
+    <div>
+        <table class="table table-bordered" style=" width:500px; align-content:center; margin-right:50px; color:black;">
+            <tr style="background-color:#0094ff">
+                <th>
+                    @Html.DisplayName("Resourcename")
+                </th>
+                <th>Action</th>
+            </tr>   
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResourceName)
+                    </td>
+                    <td>
+
+                        @Html.ActionLink("Delete", "DeleteResources", null, new { id = item.ResourceId }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <a href="Welcome" class="btn btn-danger">Home</a>
+</div>
