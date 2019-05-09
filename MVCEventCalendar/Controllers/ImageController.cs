@@ -38,7 +38,7 @@ namespace MVCEventCalendar.Controllers
                         {
                             bytes = br.ReadBytes(file1.ContentLength);
                         }
-                        using (SqlConnection connection = new SqlConnection("server=VDI-NET-0015\\LOCAL;database=ClassroomAllocationSystem;trusted_connection=true"))
+                        using (SqlConnection connection = new SqlConnection("server=VDI-NET-0010\\LOCAL;database=ClassroomAllocationSystem;trusted_connection=true"))
                         {
                             connection.Open();
                             SqlCommand command = new SqlCommand("insert into ClassRooms(ClassRoomName,ClassroomImage) values(@name,@image)", connection);

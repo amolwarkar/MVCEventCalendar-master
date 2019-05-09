@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ClassroomAllocationSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ClassroomAllocationSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdminDetails">
           <Key>
             <PropertyRef Name="EmployeeNumber" />
@@ -214,6 +214,11 @@
           <Parameter Name="quantity2" Type="int" Mode="In" />
           <Parameter Name="quantity3" Type="int" Mode="In" />
         </Function>
+        <Function Name="InsertFeedback" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="empid" Type="int" Mode="In" />
+          <Parameter Name="feedback" Type="varchar" Mode="In" />
+          <Parameter Name="date" Type="date" Mode="In" />
+        </Function>
         <Function Name="ValidateBookingClassroom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
@@ -263,8 +268,7 @@
             <End Role="UserQuestionDetails" EntitySet="UserQuestionDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ClassroomAllocationSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -541,6 +545,11 @@
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
             <Parameter Name="ClassroomId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="InsertFeedback">
+            <Parameter Name="empid" Mode="In" Type="Int32" />
+            <Parameter Name="feedback" Mode="In" Type="String" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getAllRooms_Result">
           <Property Type="Int32" Name="ClassRoomId" Nullable="false" />
@@ -703,6 +712,7 @@
           <FunctionImportMapping FunctionImportName="GetResource" FunctionName="ClassroomAllocationSystemModel.Store.GetResource" />
           <FunctionImportMapping FunctionImportName="GetResourcebyName" FunctionName="ClassroomAllocationSystemModel.Store.GetResourcebyName" />
           <FunctionImportMapping FunctionImportName="ValidateBookingClassroom" FunctionName="ClassroomAllocationSystemModel.Store.ValidateBookingClassroom" />
+          <FunctionImportMapping FunctionImportName="InsertFeedback" FunctionName="ClassroomAllocationSystemModel.Store.InsertFeedback" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

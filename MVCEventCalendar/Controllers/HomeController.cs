@@ -43,6 +43,9 @@ namespace MVCEventCalendar.Controllers
                 {
                     // return View();
                     return Content("<script language='javascript' type='text/javascript'>alert('User Not Found');window.location = 'Index';</script>");
+
+           
+                    
                 }
                 else
                 {

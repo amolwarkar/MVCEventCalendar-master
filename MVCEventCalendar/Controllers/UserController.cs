@@ -218,10 +218,12 @@ namespace MVCEventCalendar.Controllers
         public ActionResult GiveFeedback(FormCollection formCollection)
         {
             ViewBag.AllQuestions = new SelectList(dc.Questions.ToList(), "Question1", "Question1");
-            
-
-
-            return View();
+            DateTime date = DateTime.Now;
+            string feedback = formCollection["Feedback1"];
+            int employeeno=Convert.ToInt32(Session["EmployeeNumber"]);
+            var result = dc.InsertFeedback(employeeno,feedback,date);
+            return Content("<script language='javascript' type='text/javascript'>alert('Your feedback is recorded successfully');window.location = '/User/GiveFeedback';</script>");
+          
         }
      
 

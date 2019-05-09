@@ -103,5 +103,22 @@ namespace MVCEventCalendar
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("ValidateBookingClassroom", startDateParameter, endDateParameter, classroomIdParameter);
         }
+    
+        public virtual int InsertFeedback(Nullable<int> empid, string feedback, Nullable<System.DateTime> date)
+        {
+            var empidParameter = empid.HasValue ?
+                new ObjectParameter("empid", empid) :
+                new ObjectParameter("empid", typeof(int));
+    
+            var feedbackParameter = feedback != null ?
+                new ObjectParameter("feedback", feedback) :
+                new ObjectParameter("feedback", typeof(string));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertFeedback", empidParameter, feedbackParameter, dateParameter);
+        }
     }
 }
