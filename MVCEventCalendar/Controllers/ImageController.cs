@@ -46,8 +46,7 @@ namespace MVCEventCalendar.Controllers
                             command.Parameters.AddWithValue("@image", bytes);
                             command.ExecuteNonQuery();
                         }
-                            return Content("<script languagr='javascript' type='text/javascript'>alert('Data added to the database successfully');windows.location='/Admin/Welcome';</script>");
-                        
+                            return Content("<script languagr='javascript' type='text/javascript'>alert('Data added to the database successfully');windows.location='/Admin/Welcome';</script>");                        
                     }
                 }
                 return View();
