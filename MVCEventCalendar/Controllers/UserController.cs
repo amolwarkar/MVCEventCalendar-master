@@ -131,8 +131,7 @@ namespace MVCEventCalendar.Controllers
         {
             if (Session["EmployeeNumber"] != null)
             {
-                ViewBag.AllQuestions = new SelectList(dc.Questions.ToList(), "Question1", "Question1");
-
+                ViewBag.AllQuestions = new SelectList(dc.Questions.ToList(), "Question1", "Question1");   
                 return View(dc.ClassRooms.ToList());
             }
             else
@@ -153,15 +152,7 @@ namespace MVCEventCalendar.Controllers
         {
             ViewBag.AllQuestions = new SelectList(dc.Questions.ToList(), "Question1", "Question1");
 
-            //quantities in number
-            //ViewBag.qty = formCollection["units"];
-            //string quantity = ViewBag.qty;
-            //string[] strTemp = quantity.Split(',').ToArray();
-            //int sam2 =Convert.ToInt32( strTemp[0]);
-            //ViewBag.res = (from r in dc.Resources
-            //              select r.ResourceName).ToArray();           
-            //string res0 = ViewBag.res[0];
-
+   
 
             int chair = Convert.ToInt32(formCollection["chairs"]);
             int pcs = Convert.ToInt32(formCollection["pcs"]);
@@ -225,7 +216,30 @@ namespace MVCEventCalendar.Controllers
             return Content("<script language='javascript' type='text/javascript'>alert('Your feedback is recorded successfully');window.location = '/User/GiveFeedback';</script>");
           
         }
-     
+        
+        public ActionResult showclassroomdetails(int id)
+        {
+            //int id = Convert.ToInt32(form["ClassroomId"]);
+            ViewBag.AllQuestions = new SelectList(dc.Questions.ToList(), "Question1", "Question1");
+            var result = dc.getResourcesbyClassroom(id);
+            ViewBag.cs = id;
+            return View(result.ToList());
+            
+        }
+        
+        public ActionResult showclassroomdetails1(FormCollection form)
+        {
+            ViewBag.AllQuestions = new SelectList(dc.Questions.ToList(), "Question1", "Question1");
+            int a = Convert.ToInt32(form["classId"]);
+            //var classroom = a[0];
+            var cs = dc.ClassRooms.Where(s=>s.ClassRoomId==a).ToList();
+
+            //ViewBag.AllQuestions = new SelectList(dc.Questions.ToList(), "Question1", "Question1");
+            ViewBag.data1 = new SelectList(cs, "ClassRoomId", "ClassRoomName");
+
+            return View();
+
+        }
 
 
 

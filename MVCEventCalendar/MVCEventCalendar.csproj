@@ -255,6 +255,12 @@
     <Compile Include="GetFeedback_Result.cs">
       <DependentUpon>CalenderModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="getResourcesbyClassroom_Result.cs">
+      <DependentUpon>CalenderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getResourcesbyClassroom_Result1.cs">
+      <DependentUpon>CalenderModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -321,6 +327,8 @@
     <Content Include="Views\User\RequirementCalender.cshtml" />
     <Content Include="Views\User\BookRoomByRequirementsCalender.cshtml" />
     <Content Include="Views\User\GiveFeedback.cshtml" />
+    <Content Include="Views\User\showclassroomdetails.cshtml" />
+    <Content Include="Views\User\showclassroomdetails1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

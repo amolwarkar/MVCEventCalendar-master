@@ -120,5 +120,14 @@ namespace MVCEventCalendar
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertFeedback", empidParameter, feedbackParameter, dateParameter);
         }
+    
+        public virtual ObjectResult<getResourcesbyClassroom_Result1> getResourcesbyClassroom(Nullable<int> classroomid)
+        {
+            var classroomidParameter = classroomid.HasValue ?
+                new ObjectParameter("classroomid", classroomid) :
+                new ObjectParameter("classroomid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getResourcesbyClassroom_Result1>("getResourcesbyClassroom", classroomidParameter);
+        }
     }
 }

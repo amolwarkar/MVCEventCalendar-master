@@ -214,6 +214,9 @@
           <Parameter Name="quantity2" Type="int" Mode="In" />
           <Parameter Name="quantity3" Type="int" Mode="In" />
         </Function>
+        <Function Name="getResourcesbyClassroom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="classroomid" Type="int" Mode="In" />
+        </Function>
         <Function Name="InsertFeedback" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="empid" Type="int" Mode="In" />
           <Parameter Name="feedback" Type="varchar" Mode="In" />
@@ -550,6 +553,9 @@
             <Parameter Name="feedback" Mode="In" Type="String" />
             <Parameter Name="date" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="getResourcesbyClassroom" ReturnType="Collection(ClassroomAllocationSystemModel.getResourcesbyClassroom_Result1)">
+            <Parameter Name="classroomid" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getAllRooms_Result">
           <Property Type="Int32" Name="ClassRoomId" Nullable="false" />
@@ -567,6 +573,15 @@
           <Property Type="Int32" Name="employeenumber" Nullable="false" />
           <Property Type="String" Name="Feedback" Nullable="false" MaxLength="50" />
           <Property Type="DateTime" Name="feedbackdate" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getResourcesbyClassroom_Result">
+          <Property Type="String" Name="ResourceName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ResourceQuantity" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="getResourcesbyClassroom_Result1">
+          <Property Type="String" Name="ResourceName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ResourceQuantity" Nullable="false" />
+          <Property Type="Int32" Name="ClassRoomId" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -713,6 +728,15 @@
           <FunctionImportMapping FunctionImportName="GetResourcebyName" FunctionName="ClassroomAllocationSystemModel.Store.GetResourcebyName" />
           <FunctionImportMapping FunctionImportName="ValidateBookingClassroom" FunctionName="ClassroomAllocationSystemModel.Store.ValidateBookingClassroom" />
           <FunctionImportMapping FunctionImportName="InsertFeedback" FunctionName="ClassroomAllocationSystemModel.Store.InsertFeedback" />
+          <FunctionImportMapping FunctionImportName="getResourcesbyClassroom" FunctionName="ClassroomAllocationSystemModel.Store.getResourcesbyClassroom">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClassroomAllocationSystemModel.getResourcesbyClassroom_Result1">
+                <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+                <ScalarProperty Name="ResourceQuantity" ColumnName="ResourceQuantity" />
+                <ScalarProperty Name="ClassRoomId" ColumnName="ClassRoomId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

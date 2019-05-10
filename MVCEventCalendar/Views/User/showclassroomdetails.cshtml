@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MVCEventCalendar.getResourcesbyClassroom_Result1>
+
+@{
+    ViewBag.Title = "showclassroomdetails";
+}
+<center>
+    <h2>showclassroomdetails</h2>
+</center>
+@using (Html.BeginForm("showclassroomdetails1", "User", FormMethod.Post)) {
+<div class="container">
+    <div class="col-md-4" style="margin-left:30%">
+        <table class="table table-hover" style="border:0px;text-align:center">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResourceName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResourceQuantity)
+
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResourceName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResourceQuantity)
+                    </td>
+                    
+                </tr>
+               }
+            
+            <tr>
+
+            <td>
+                <input type="text" value="@ViewBag.cs" name="classId" hidden />
+            </td>
+            <td>
+                <br />
+                <input type="submit" value="Book Classroom" style="margin-left:-20px" class="btn btn-success" />
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+</div>
+}
