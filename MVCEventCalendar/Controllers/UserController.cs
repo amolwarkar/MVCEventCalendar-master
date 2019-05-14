@@ -22,7 +22,7 @@ namespace MVCEventCalendar.Controllers
             }
             else
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Login');window.location = '/Home/Index';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Please Login First');window.location = '/Home/Index';</script>");
             }
 
 
@@ -178,8 +178,10 @@ namespace MVCEventCalendar.Controllers
             else
             {
                 var name = dc.GetResourcebyName(projector, chair, pcs).ToList();
-                if (name == null){
-                    return Content("<script language='javascript' type='text/javascript'>alert('Your requirements dont have any match');window.location = '/User/BookRoomByRequirements';</script>");
+
+                
+                if (name.Count == 0){
+                    return Content("<script language='javascript' type='text/javascript'>alert('Sorry ! No classroom with this requirement');window.location = '/User/BookRoomByRequirements';</script>");
                                      
                 }
                 if (name.ToString() =="0" )
@@ -191,7 +193,8 @@ namespace MVCEventCalendar.Controllers
 
                 else
                 { 
-                     ViewBag.data1 = new SelectList(name);
+                     ViewBag.data1 = new SelectList(name,"cid","classicid");
+                  // ViewBag.data1 = new SelectList(dc.ClassRooms, "ClassRoomId", name);
                 }
             }
             return View();

@@ -1,35 +1,37 @@
 ﻿@model IEnumerable<MVCEventCalendar.ClassRoom>
+<div style="background-image:url(../../Content/Images/2.jpg);background-size:cover">
+    <div style="border:1px solid black; width:600px;background-color:white;padding-top:30px;opacity:0.9;margin-left:400px">
+        <center>
+            <h2>All Available Rooms</h2>
+        </center>
+        @*@using (Html.BeginForm("showclassroomdetails","User",FormMethod.Post)) {*@
+        <div class="" style="margin:5%;">
+            <table class="table table-bordered" style="border-color:#0094ff;padding:20%;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:20px; ">
+                <tr style="background-color:#0094ff">
+                    <th>
+                        @Html.DisplayName("Classroom Name")
+                    </th>
+                    <th>
+                        Show details
+                    </th>
 
-<center>
-    <h2>All Available Rooms</h2>
-</center>
-@*@using (Html.BeginForm("showclassroomdetails","User",FormMethod.Post)) {*@ 
-    <div class="" style="margin:5%;">
-        <table class="table table-bordered" style="border-color:#0094ff;padding:20%;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:20px; ">
-            <tr style="background-color:#0094ff">
-                <th>
-                    @Html.DisplayName("Classroom Name")
-                </th>
-                <th>
-                    Show details
-                </th>
-
-
-            </tr>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClassRoomName)
-                    </td>
-                    <td>
-                       @* <input type="submit" name="" value="Show details" />*@
-                        @Html.ActionLink("show all details", "showclassroomdetails",new { id=item.ClassRoomId})
-                       
-                    </td>
 
                 </tr>
-            }
-        </table>
-    </div>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClassRoomName)
+                        </td>
+                        <td>
+                            @* <input type="submit" name="" value="Show details" />*@
+                            @Html.ActionLink("Details", "showclassroomdetails", new { id = item.ClassRoomId })
 
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+        </div>
+    </div>

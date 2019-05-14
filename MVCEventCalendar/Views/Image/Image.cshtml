@@ -1,40 +1,75 @@
 ﻿@model MVCEventCalendar.ClassRoom
-    @{
-        Layout = null;
-}
-<center>
-    <h2>Add Classroom</h2>
-</center>
-@using (Html.BeginForm("Image", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+
+@*@using (Html.BeginForm("Image", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+
+@using (Ajax.BeginForm("Image", "Image", new AjaxOptions
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "div5"
+}, new { enctype = "multipart/form-data" }))
+{
+    <div style="background-image:url(../../Content/Images/2.jpg);background-size:cover">
+        @Html.AntiForgeryToken()
+        <div style="border:1px solid black; border-radius:10px;background-color:white;padding-top:30px;opacity:0.9;border:1px solid black; width:600px;margin-left:400px">
+            <div class="form-horizontal">
+                <h3 style="align-items:center;padding-left:140px">Add Classroom Details</h3>
+                <br />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Label("Classroom Name", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-4">
+                        <input type="text" pattern="[a-zA-Z0-9]+" name="ClassRoomName" required class="form-control" />
+                        @* @Html.EditorFor(model => model.ClassRoomName, new { htmlAttributes = new { @class = "form-control" ,required="reqiured"} })*@
+                        @Html.ValidationMessageFor(model => model.ClassRoomName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Classroom Image", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-4">
+                        <input type="file" name="file1" id="file1" style="width: 50px; height:50px" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Seating Capacity", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-4">
+                        @*@Html.EditorFor(model => model.SeatingCapacity, new { htmlAttributes = new { @class = "form-control", required = "reqiured" } })*@
+                        <input type="number" name="SeatingCapacity" id="SeatingCapacity" class="form-control " required min="10" max="120" />
+                        @Html.ValidationMessageFor(model => model.SeatingCapacity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Building Name", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-4">
+                        @*@Html.EditorFor(model => model.BuildingName, new { htmlAttributes = new { @class = "form-control", required = "reqiured" } })*@
+                        <input type="text" name="BuildingName" id="BuildingName" class="form-control" required />
+                        @Html.ValidationMessageFor(model => model.BuildingName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Level No", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-4">
+                        @*@Html.EditorFor(model => model.LevelNo, new { htmlAttributes = new { @class = "form-control" }})*@
+                        <input type="number" name="LevelNo" id="LevelNo" min="1" max="5" class="form-control" required />
+                        @Html.ValidationMessageFor(model => model.LevelNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" name="Command" value="Add Details" class="btn btn-warning" />
+                        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        }
         
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.Label("ClassRoom Name", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.ClassRoomName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClassRoomName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Classroom Image", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="file1" id="file1" style="width: 100%;" />
-               
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" name="Command" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
+        <div id="div5"></div>
 

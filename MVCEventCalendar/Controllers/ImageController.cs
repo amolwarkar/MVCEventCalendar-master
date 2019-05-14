@@ -21,11 +21,11 @@ namespace MVCEventCalendar.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Image(ClassRoom classRoom,String Command,string ClassRoomName, HttpPostedFileBase file1)
+        public ActionResult Image(ClassRoom classRoom,String Command,string ClassRoomName,int SeatingCapacity,string BuildingName,int LevelNo, HttpPostedFileBase file1)
         {
             try
             {
-                if (Command == "Create") { 
+                if (Command == "Add Details") { 
                 if (file1 != null)
                 {
                         string fileName = System.IO.Path.GetFileName(file1.FileName);
@@ -41,12 +41,16 @@ namespace MVCEventCalendar.Controllers
                         using (SqlConnection connection = new SqlConnection("server=VDI-NET-0010\\LOCAL;database=ClassroomAllocationSystem;trusted_connection=true"))
                         {
                             connection.Open();
-                            SqlCommand command = new SqlCommand("insert into ClassRooms(ClassRoomName,ClassroomImage) values(@name,@image)", connection);
+                            SqlCommand command = new SqlCommand("insert into ClassRooms(ClassRoomName,ClassroomImage,SeatingCapacity,BuildingName,LevelNo) values(@name,@image,@seat,@building,@level)", connection);
                             command.Parameters.AddWithValue("@name", ClassRoomName);
                             command.Parameters.AddWithValue("@image", bytes);
+                            command.Parameters.AddWithValue("@seat", SeatingCapacity);
+                            command.Parameters.AddWithValue("@building", BuildingName);
+                            command.Parameters.AddWithValue("@level", LevelNo);
                             command.ExecuteNonQuery();
                         }
-                            return Content("<script languagr='javascript' type='text/javascript'>alert('Data added to the database successfully');windows.location='/Admin/Welcome';</script>");                        
+                        return Content("<script languagr='javascript' type='text/javascript'>alert('Classroom register Successfully');window.location = '/Image/Image';</script>");
+                        //return Content("<script languagr='javascript' type='text/javascript'>alert('Data added to the database successfully');window.location = '/Image/Image';<script>");
                     }
                 }
                 return View();
@@ -54,7 +58,7 @@ namespace MVCEventCalendar.Controllers
             catch (Exception)
             {
 
-                throw;
+                return Content("<script languagr='javascript' type='text/javascript'>alert('Classroom already register');window.location = '/Image/Image';</script>");
             }
         }
         public ActionResult List()
@@ -73,7 +77,7 @@ namespace MVCEventCalendar.Controllers
         private List<ClassRoom> GetClasses()
         {
             List<ClassRoom> images = new List<ClassRoom>();
-            SqlConnection connection = new SqlConnection("server=VDI-NET-0015\\LOCAL;database=ClassroomAllocationSystem;trusted_connection=true");
+            SqlConnection connection = new SqlConnection("server=VDI-NET-0010\\LOCAL;database=ClassroomAllocationSystem;trusted_connection=true");
             connection.Open();
             SqlCommand command = new SqlCommand("Select * from ClassRooms", connection);
             using (SqlDataReader sdr = command.ExecuteReader())

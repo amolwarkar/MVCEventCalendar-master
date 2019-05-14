@@ -1,58 +1,54 @@
-﻿@model IEnumerable<MVCEventCalendar.ClassRoomDetail>
+﻿@model IEnumerable<MVCEventCalendar.classroomsAndResource_Result1>
 
-@{
-    ViewBag.Title = "List";
-}
-<style>
-    #table1 tr:nth-child(odd) {
-        background-color: #eee;
-    }
+<body style="background-image:url(../../Content/Images/2.jpg)">
+    <div style="margin-left:20%">
+        
 
-    #table1 tr:nth-child(even) {
-        background-color: #fff;
-    }
-</style>
-<body>
-    <div>
-        <div style="align-content:center;   width:800px; color:black">
-           <h3>Add Classroom Details</h3>
-        </div>
-        <div style="margin-left:40px">
-            <table id="table1" class="table table-bordered">
+        <table class="table" style="width:800px;background-color:white;opacity:0.9">
+           <tr>
+               <td></td>
+               <td style="font-size:30px">
+                   Resources Details List
+               </td>
+               </tr> 
+            
+            <tr style="background-color:#0094ff;" class="table-bordered">
+
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassRoomName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResourceName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResourceQuantity)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ClassroomId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ResourceQuantity)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Resource.ResourceName)
-                    </th>
-                    <th></th>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClassRoomName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResourceName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResourceQuantity)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "DeleteClassRoomDetails", new { id = item.DetailsId }, new { @class = "btn btn-danger" })
+
+                    </td>
                 </tr>
+            }
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ClassroomId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ResourceQuantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Resource.ResourceName)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Update", "UpdateClassroomDetails", new { id = item.DetailsId }, new { @class = "btn btn-warning" })
-                            @Html.ActionLink("Delete", "DeleteClassRoomDetails", new { id = item.DetailsId }, new { @class = "btn btn-danger" })
-                        </td>
-                    </tr>
-                }
-
-            </table>
-        </div>
-        @Html.ActionLink("Home", "Welcome", "Admin", null, new { @class = "btn btn-danger" })
+        </table>
+        <a href="/Home/Index" class="btn btn-danger">
+            Cancel
+        </a>
     </div>
 </body>

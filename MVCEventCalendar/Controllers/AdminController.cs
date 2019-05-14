@@ -20,27 +20,49 @@ namespace MVCEventCalendar.Controllers
         
         public ActionResult AddResource()
         {
-            ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
-            return View();
+            if (Session["EmployeeNumber"] != null)
+            {
+
+                ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
+                return View();
+            }
+            else
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Please Login First');window.location = '/Home/Index';</script>");
+            }
         }
 
         //after adding new resource
         [HttpPost]
         public ActionResult AddResource(Resource form)
         {
-            Resource resource = new Resource();
-            resource.ResourceName =form.ResourceName;
-            entities.Resources.Add(resource);
-            entities.SaveChanges();
-            //return View("List");
-            return RedirectToAction("List","Admin");
+            try
+            {
+                Resource resource = new Resource();
+                resource.ResourceName = form.ResourceName;
+                entities.Resources.Add(resource);
+                entities.SaveChanges();
+                //return View("List");
+               // return RedirectToAction("List", "Admin");
+                return Content("<script languagr='javascript' type='text/javascript'>alert('Resource added to the database successfully');window.location = '/Home/Index';</script>");
+            }
+            catch(Exception)
+            {
+                return Content("<script languagr='javascript' type='text/javascript'>alert('Resource already in the database');window.location = '/Admin/AddResource';</script>");
+            }
         }
 
         public ActionResult List()
         {
-            ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
-            //return PartialView("_AdminList",entities.Resources);
-            return View(entities.Resources);
+            if (Session["EmployeeNumber"] != null)
+            {
+                ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
+                return View(entities.Resources);
+            }
+            else
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Please Login First');window.location = '/Home/Index';</script>");
+            }
         }
    
         public ActionResult DeleteResources(int id)

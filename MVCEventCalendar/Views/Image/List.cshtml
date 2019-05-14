@@ -6,35 +6,30 @@
 
 <h2>List</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ClassRoomName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClassroomImage)
-        </th>
-        <th></th>
-    </tr>
+<div style="background-image:url(../../Content/Images/2.jpg);background-size:cover">
+    <div style="border:1px solid black; width:600px;background-color:white;padding-top:30px;opacity:0.9;margin-left:300px">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassRoomName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassroomImage)
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClassRoomName)
+                    </td>
+                    <td>
+                        <input type="image" style="width:200px;height:150px;" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ClassroomImage))" name="ClassroomImage" />
+                    </td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ClassRoomName)
-        </td>
-        <td>
-            <input type="image" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ClassroomImage))" name="ClassroomImage" />
-
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ClassRoomId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ClassRoomId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ClassRoomId })
-        </td>
-    </tr>
-}
-
-</table>
+                </tr>
+            }
+        </table>
+        </div>
+    </div>

@@ -24,7 +24,7 @@ namespace MVCEventCalendar.Controllers
             Resource resource = new Resource();
             ViewBag.AllResourceId = new SelectList(entities.Resources.ToList(), "ResourceId", "ResourceName");
             ViewBag.AllClassroomId = new SelectList(entities.ClassRooms.ToList(), "ClassRoomId", "ClassRoomName");
-            return View();
+             return View();
         }
 
         [HttpPost]
@@ -37,23 +37,31 @@ namespace MVCEventCalendar.Controllers
             detail.ResourceId = Convert.ToInt32(form["AllResourceId"]);
             entities.ClassRoomDetails.Add(detail);
             entities.SaveChanges();
-            return RedirectToAction("List", "ClassroomDetails");
-
+            var addedData = entities.ClassRoomDetails.Where(s => s.ClassroomId == detail.ClassroomId);
+            //return RedirectToAction("List", "ClassroomDetails");
+            return Content("<script languagr='javascript' type='text/javascript'>alert('Data Added successfully');window.location = '/ClassroomDetails/List';</script>");
         }
 
         public ActionResult List()
         {
             ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
-            return View(entities.ClassRoomDetails.ToList());
+
+            var result = entities.classroomsAndResource();
+
+            return View(result.ToList());
         }
+
+
        
         public ActionResult DeleteClassRoomDetails(int id)
         {
-            var result = entities.ClassRoomDetails.Find(id);
+            var result = entities.ClassRoomDetails.Where(e => e.DetailsId == id).FirstOrDefault();
             entities.ClassRoomDetails.Remove(result);
             entities.SaveChanges();
             return RedirectToAction("List");
         }
+
+
         public ActionResult UpdateClassroomDetails(int id)
         {
             ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
@@ -72,7 +80,7 @@ namespace MVCEventCalendar.Controllers
             classRoom.ResourceQuantity = Convert.ToInt32(collection["ResourceQuantity"]);
             classRoom.ClassroomId = Convert.ToInt32(collection["AllClassroomId"]);
             entities.SaveChanges();
-            return RedirectToAction("List");
+            return RedirectToAction("List","ClassroomDetails");
         }
 
     }

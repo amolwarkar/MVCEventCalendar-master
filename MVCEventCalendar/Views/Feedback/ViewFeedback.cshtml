@@ -1,43 +1,43 @@
 ﻿@model IEnumerable<MVCEventCalendar.Feedback>
 
-@{
-    Layout = null;
-}
-<center>
-    <h2>All Feedbacks</h2>
-</center>
-<span style="margin:6px"></span>
+<div style="background-image:url(../../Content/Images/2.jpg);background-size:cover">
+    <div style="height:600px;opacity:0.9;margin-left:150px;margin-top:">
+      
+        <span style="margin:6px"></span>
+        <div style="margin:20%;background-color:white;padding:20px; margin-top:-20px;">
+            <center>
+                <h2>All Feedbacks</h2>
+            </center>
+            <table class="table table-bordered" ">
+                <tr style="background-color:#0094ff">
+                    <th>
+                        @Html.DisplayName("Employee Number")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Feedback")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Feedback Date")
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Feedback1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FeedbackDate)
+                        </td>
+                    </tr>
+                }
+            </table>
+            <a href="/Home/Index" class="btn btn-danger"><strong>Cancel</strong></a>
+        </div>
+        </div>
+    </div>
 
-<div style="margin:20%;margin-top:-30px">
-    <table class="table">
-        <tr style="background-color:#0094ff">
-            <th>
-                @Html.DisplayNameFor(model => model.EmployeeNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Feedback1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FeedbackDate)
-            </th>
 
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Feedback1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FeedbackDate)
-                </td>
-
-            </tr>
-        }
-
-    </table>
-</div>

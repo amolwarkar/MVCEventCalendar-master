@@ -232,6 +232,12 @@
     <Compile Include="ClassRoomDetail.cs">
       <DependentUpon>CalenderModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="classroomsAndResource_Result.cs">
+      <DependentUpon>CalenderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="classroomsAndResource_Result1.cs">
+      <DependentUpon>CalenderModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClassroomController.cs" />
     <Compile Include="Controllers\ClassroomDetailsController.cs" />
@@ -253,6 +259,9 @@
       <DependentUpon>CalenderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetFeedback_Result.cs">
+      <DependentUpon>CalenderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetResourcebyName_Result.cs">
       <DependentUpon>CalenderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="getResourcesbyClassroom_Result.cs">

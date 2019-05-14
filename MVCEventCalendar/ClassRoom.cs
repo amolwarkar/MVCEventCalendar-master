@@ -18,8 +18,8 @@ namespace MVCEventCalendar
         public ClassRoom()
         {
             this.BookRooms = new HashSet<BookRoom>();
-            this.ClassRoomDetails = new HashSet<ClassRoomDetail>();
             this.Events = new HashSet<Event>();
+            this.ClassRoomDetails = new HashSet<ClassRoomDetail>();
         }
     
         public int ClassRoomId { get; set; }
@@ -32,8 +32,8 @@ namespace MVCEventCalendar
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookRoom> BookRooms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClassRoomDetail> ClassRoomDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClassRoomDetail> ClassRoomDetails { get; set; }
     }
 }

@@ -29,14 +29,14 @@ namespace MVCEventCalendar
     
         public virtual DbSet<AdminDetail> AdminDetails { get; set; }
         public virtual DbSet<BookRoom> BookRooms { get; set; }
-        public virtual DbSet<ClassRoomDetail> ClassRoomDetails { get; set; }
         public virtual DbSet<ClassRoom> ClassRooms { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<UserQuestionDetail> UserQuestionDetails { get; set; }
         public virtual DbSet<UserRegistrationDetail> UserRegistrationDetails { get; set; }
+        public virtual DbSet<ClassRoomDetail> ClassRoomDetails { get; set; }
+        public virtual DbSet<Resource> Resources { get; set; }
     
         public virtual ObjectResult<getAllRooms_Result> getAllRooms()
         {
@@ -68,23 +68,6 @@ namespace MVCEventCalendar
                 new ObjectParameter("quantity3", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetResource", quantity1Parameter, quantity2Parameter, quantity3Parameter);
-        }
-    
-        public virtual ObjectResult<string> GetResourcebyName(Nullable<int> quantity1, Nullable<int> quantity2, Nullable<int> quantity3)
-        {
-            var quantity1Parameter = quantity1.HasValue ?
-                new ObjectParameter("quantity1", quantity1) :
-                new ObjectParameter("quantity1", typeof(int));
-    
-            var quantity2Parameter = quantity2.HasValue ?
-                new ObjectParameter("quantity2", quantity2) :
-                new ObjectParameter("quantity2", typeof(int));
-    
-            var quantity3Parameter = quantity3.HasValue ?
-                new ObjectParameter("quantity3", quantity3) :
-                new ObjectParameter("quantity3", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetResourcebyName", quantity1Parameter, quantity2Parameter, quantity3Parameter);
         }
     
         public virtual ObjectResult<Nullable<int>> ValidateBookingClassroom(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> classroomId)
@@ -128,6 +111,28 @@ namespace MVCEventCalendar
                 new ObjectParameter("classroomid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getResourcesbyClassroom_Result1>("getResourcesbyClassroom", classroomidParameter);
+        }
+    
+        public virtual ObjectResult<classroomsAndResource_Result1> classroomsAndResource()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<classroomsAndResource_Result1>("classroomsAndResource");
+        }
+    
+        public virtual ObjectResult<GetResourcebyName_Result> GetResourcebyName(Nullable<int> quantity1, Nullable<int> quantity2, Nullable<int> quantity3)
+        {
+            var quantity1Parameter = quantity1.HasValue ?
+                new ObjectParameter("quantity1", quantity1) :
+                new ObjectParameter("quantity1", typeof(int));
+    
+            var quantity2Parameter = quantity2.HasValue ?
+                new ObjectParameter("quantity2", quantity2) :
+                new ObjectParameter("quantity2", typeof(int));
+    
+            var quantity3Parameter = quantity3.HasValue ?
+                new ObjectParameter("quantity3", quantity3) :
+                new ObjectParameter("quantity3", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourcebyName_Result>("GetResourcebyName", quantity1Parameter, quantity2Parameter, quantity3Parameter);
         }
     }
 }

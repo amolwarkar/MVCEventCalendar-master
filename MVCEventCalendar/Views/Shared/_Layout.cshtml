@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="~/Content/MyScripts/MyJavaScript.js"></script>
-    @*<link rel="stylesheet" href="~/Content/Css/MyStyleSheet.css" />*@
+    <link rel="stylesheet" href="~/Content/Css/MyStyleSheet.css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
@@ -28,15 +28,32 @@
                 <li class="navHover"><a href="@Url.Action("About","Home")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">About</strong></a></li>
                 @if (Session["Username"] != null)
                 {
-                    //if (Session["Username"].ToString() != "admin")
-                    //{
-                        <li class="navHover"><a href="@Url.Action("GiveFeedback", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Give Feedback</strong></a></li>
-                    
-                
-                        <li class="navHover"><a href="@Url.Action("UserLogin", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Book Room</strong></a></li>
+                    string user = Session["Username"].ToString();
+                    if (user != "admin")
+                    {
+
                         <li class="navHover"><a href="@Url.Action("AllRooms", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">All Rooms</strong></a></li>
+                        <li class="navHover"><a href="@Url.Action("UserLogin", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Book Room</strong></a></li>
                         <li class="navHover"><a href="@Url.Action("BookRoomByRequirements", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Book Classoom By Requirement</strong></a></li>
-                    
+                        <li class="navHover"><a href="@Url.Action("GiveFeedback", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Give Feedback</strong></a></li>
+                    }
+                    else
+                    {
+
+                        <li class="navHover"><a href="@Url.Action("UserLogin", "User")"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Records</strong></a></li>
+
+                        <div class="dropdown">
+                            <button class="dropbtn"><strong style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color:white">Actions</strong></button>
+                            <div class="dropdown-content">
+                                <a href="/Admin/AddResource">Resource</a>
+                                <a href="/Image/Image">Classroom</a>
+                                <a href="/ClassroomDetails/AddClassroomDetails">Add Classroom Details</a>
+                                <a href="/ClassroomDetails/List">Resources Details</a>
+                                <a href="/Feedback/ViewFeedback">Feedbacks</a>
+                            </div>
+                        </div>
+
+                    }
                 }
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -193,7 +210,7 @@
                                         <div class="form-group">
                                             @Html.Label("Answer", htmlAttributes: new { style = "color:black;", @class = "control-label col-md-4" })
                                             <div class="col-md-6">
-                                                <input type="text" id="Answer" name="Answer" class="form-control" required />
+                                                <input type="password" id="Answer" name="Answer" class="form-control" required />
                                                 <span id="Answer_error" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -256,4 +273,3 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     @RenderSection("Scripts", false)
 </body>
-</html>

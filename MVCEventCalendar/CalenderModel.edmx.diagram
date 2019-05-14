@@ -7,23 +7,23 @@
       <Diagram DiagramId="476ed0075f0e4fb8830a8676fd8d16f0" Name="Diagram1">
         <EntityTypeShape EntityType="ClassroomAllocationSystemModel.AdminDetail" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ClassroomAllocationSystemModel.BookRoom" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClassroomAllocationSystemModel.ClassRoomDetail" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ClassroomAllocationSystemModel.ClassRoom" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClassroomAllocationSystemModel.Event" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClassroomAllocationSystemModel.Event" Width="1.5" PointX="2.875" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ClassroomAllocationSystemModel.Feedback" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ClassroomAllocationSystemModel.Question" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClassroomAllocationSystemModel.Resource" Width="1.5" PointX="3.75" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ClassroomAllocationSystemModel.UserQuestionDetail" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ClassroomAllocationSystemModel.UserRegistrationDetail" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <AssociationConnector Association="ClassroomAllocationSystemModel.FK_BookRoom_ClassRoom_Details" ManuallyRouted="false" />
         <AssociationConnector Association="ClassroomAllocationSystemModel.FK_BookRooms_UserRegistrationDetails" ManuallyRouted="false" />
-        <AssociationConnector Association="ClassroomAllocationSystemModel.FK_ClassRoomDetails_ClassRooms" ManuallyRouted="false" />
-        <AssociationConnector Association="ClassroomAllocationSystemModel.FK_ClassRoomDetails_Resource" ManuallyRouted="false" />
         <AssociationConnector Association="ClassroomAllocationSystemModel.FK_Events_ClassRooms" ManuallyRouted="false" />
         <AssociationConnector Association="ClassroomAllocationSystemModel.FK_Feedbacks_UserRegistrationDetails" ManuallyRouted="false" />
         <AssociationConnector Association="ClassroomAllocationSystemModel.FK_UserQuestionDetails_Questions" ManuallyRouted="false" />
         <AssociationConnector Association="ClassroomAllocationSystemModel.FK_UserQuestionDetails_UserRegistrationDetails" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="ClassroomAllocationSystemModel.ClassRoomDetail" Width="1.5" PointX="7.75" PointY="6" />
+        <AssociationConnector Association="ClassroomAllocationSystemModel.FK_ClassRoomDetails_ClassRooms" />
+        <EntityTypeShape EntityType="ClassroomAllocationSystemModel.Resource" Width="1.5" PointX="8.375" PointY="0.875" />
+        <AssociationConnector Association="ClassroomAllocationSystemModel.FK_ClassRoomDetails_Resource" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

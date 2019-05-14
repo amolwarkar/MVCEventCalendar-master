@@ -34,7 +34,7 @@ namespace MVCEventCalendar.Controllers
             {
                 Session["Username"] = adminResult.Username;
                 Session["EmployeeNumber"] = adminResult.EmployeeNumber;
-                return RedirectToAction("Welcome", "Admin");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -111,8 +111,11 @@ namespace MVCEventCalendar.Controllers
 
         public ActionResult ForgotPass()
         {
-            ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
-            return View();
+            
+                ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
+                return View();
+            
+            
         }
 
 

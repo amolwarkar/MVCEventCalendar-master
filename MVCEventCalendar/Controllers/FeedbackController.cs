@@ -15,7 +15,7 @@ namespace MVCEventCalendar.Controllers
         public ActionResult ViewFeedback()
         {
             ViewBag.AllQuestions = new SelectList(entities.Questions.ToList(), "Question1", "Question1");
-            var result = entities.Feedbacks;
+            var result = entities.Feedbacks.OrderByDescending(e=>e.FeedbackDate);
            // ViewBag.Allfeedback = result;
             return View(result.ToList());
         }

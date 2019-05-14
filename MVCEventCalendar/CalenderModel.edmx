@@ -201,6 +201,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="classroomsAndResource" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getAllRooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetFeedback" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetFeedbacks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -300,19 +301,6 @@
           <NavigationProperty Name="ClassRoom" Relationship="Self.FK_BookRoom_ClassRoom_Details" FromRole="BookRooms" ToRole="ClassRooms" />
           <NavigationProperty Name="UserRegistrationDetail" Relationship="Self.FK_BookRooms_UserRegistrationDetails" FromRole="BookRooms" ToRole="UserRegistrationDetails" />
         </EntityType>
-        <EntityType Name="ClassRoomDetail">
-          <Key>
-            <PropertyRef Name="DetailsId" />
-            <PropertyRef Name="ResourceId" />
-            <PropertyRef Name="ClassroomId" />
-          </Key>
-          <Property Name="DetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ResourceId" Type="Int32" Nullable="false" />
-          <Property Name="ResourceQuantity" Type="Int32" Nullable="false" />
-          <Property Name="ClassroomId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ClassRoom" Relationship="Self.FK_ClassRoomDetails_ClassRooms" FromRole="ClassRoomDetails" ToRole="ClassRooms" />
-          <NavigationProperty Name="Resource" Relationship="Self.FK_ClassRoomDetails_Resource" FromRole="ClassRoomDetails" ToRole="Resources" />
-        </EntityType>
         <EntityType Name="ClassRoom">
           <Key>
             <PropertyRef Name="ClassRoomId" />
@@ -324,8 +312,8 @@
           <Property Name="BuildingName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LevelNo" Type="Int32" />
           <NavigationProperty Name="BookRooms" Relationship="Self.FK_BookRoom_ClassRoom_Details" FromRole="ClassRooms" ToRole="BookRooms" />
-          <NavigationProperty Name="ClassRoomDetails" Relationship="Self.FK_ClassRoomDetails_ClassRooms" FromRole="ClassRooms" ToRole="ClassRoomDetails" />
           <NavigationProperty Name="Events" Relationship="Self.FK_Events_ClassRooms" FromRole="ClassRooms" ToRole="Events" />
+          <NavigationProperty Name="ClassRoomDetails" Relationship="ClassroomAllocationSystemModel.FK_ClassRoomDetails_ClassRooms" FromRole="ClassRoom" ToRole="ClassRoomDetail" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -358,14 +346,6 @@
           <Property Name="QuestionId" Type="Int32" Nullable="false" />
           <Property Name="Question1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="UserQuestionDetails" Relationship="Self.FK_UserQuestionDetails_Questions" FromRole="Questions" ToRole="UserQuestionDetails" />
-        </EntityType>
-        <EntityType Name="Resource">
-          <Key>
-            <PropertyRef Name="ResourceId" />
-          </Key>
-          <Property Name="ResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ResourceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="ClassRoomDetails" Relationship="Self.FK_ClassRoomDetails_Resource" FromRole="Resources" ToRole="ClassRoomDetails" />
         </EntityType>
         <EntityType Name="UserQuestionDetail">
           <Key>
@@ -412,30 +392,6 @@
             </Principal>
             <Dependent Role="BookRooms">
               <PropertyRef Name="EmployeeNumber" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClassRoomDetails_ClassRooms">
-          <End Role="ClassRooms" Type="Self.ClassRoom" Multiplicity="1" />
-          <End Role="ClassRoomDetails" Type="Self.ClassRoomDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClassRooms">
-              <PropertyRef Name="ClassRoomId" />
-            </Principal>
-            <Dependent Role="ClassRoomDetails">
-              <PropertyRef Name="ClassroomId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClassRoomDetails_Resource">
-          <End Role="Resources" Type="Self.Resource" Multiplicity="1" />
-          <End Role="ClassRoomDetails" Type="Self.ClassRoomDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Resources">
-              <PropertyRef Name="ResourceId" />
-            </Principal>
-            <Dependent Role="ClassRoomDetails">
-              <PropertyRef Name="ResourceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -490,12 +446,10 @@
         <EntityContainer Name="ClassroomAllocationSystemEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AdminDetails" EntityType="Self.AdminDetail" />
           <EntitySet Name="BookRooms" EntityType="Self.BookRoom" />
-          <EntitySet Name="ClassRoomDetails" EntityType="Self.ClassRoomDetail" />
           <EntitySet Name="ClassRooms" EntityType="Self.ClassRoom" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
           <EntitySet Name="Questions" EntityType="Self.Question" />
-          <EntitySet Name="Resources" EntityType="Self.Resource" />
           <EntitySet Name="UserQuestionDetails" EntityType="Self.UserQuestionDetail" />
           <EntitySet Name="UserRegistrationDetails" EntityType="Self.UserRegistrationDetail" />
           <AssociationSet Name="FK_BookRoom_ClassRoom_Details" Association="Self.FK_BookRoom_ClassRoom_Details">
@@ -505,14 +459,6 @@
           <AssociationSet Name="FK_BookRooms_UserRegistrationDetails" Association="Self.FK_BookRooms_UserRegistrationDetails">
             <End Role="UserRegistrationDetails" EntitySet="UserRegistrationDetails" />
             <End Role="BookRooms" EntitySet="BookRooms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClassRoomDetails_ClassRooms" Association="Self.FK_ClassRoomDetails_ClassRooms">
-            <End Role="ClassRooms" EntitySet="ClassRooms" />
-            <End Role="ClassRoomDetails" EntitySet="ClassRoomDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClassRoomDetails_Resource" Association="Self.FK_ClassRoomDetails_Resource">
-            <End Role="Resources" EntitySet="Resources" />
-            <End Role="ClassRoomDetails" EntitySet="ClassRoomDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Events_ClassRooms" Association="Self.FK_Events_ClassRooms">
             <End Role="ClassRooms" EntitySet="ClassRooms" />
@@ -538,11 +484,6 @@
             <Parameter Name="quantity2" Mode="In" Type="Int32" />
             <Parameter Name="quantity3" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetResourcebyName" ReturnType="Collection(String)">
-            <Parameter Name="quantity1" Mode="In" Type="Int32" />
-            <Parameter Name="quantity2" Mode="In" Type="Int32" />
-            <Parameter Name="quantity3" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="ValidateBookingClassroom" ReturnType="Collection(Int32)">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
@@ -554,9 +495,25 @@
             <Parameter Name="date" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="getResourcesbyClassroom" ReturnType="Collection(ClassroomAllocationSystemModel.getResourcesbyClassroom_Result1)">
-            <Parameter Name="classroomid" Mode="In" Type="Int32" />
+          <Parameter Name="classroomid" Mode="In" Type="Int32" />
           </FunctionImport>
-        </EntityContainer>
+          <EntitySet Name="ClassRoomDetails" EntityType="ClassroomAllocationSystemModel.ClassRoomDetail" />
+          <AssociationSet Name="FK_ClassRoomDetails_ClassRooms" Association="ClassroomAllocationSystemModel.FK_ClassRoomDetails_ClassRooms">
+            <End Role="ClassRoom" EntitySet="ClassRooms" />
+            <End Role="ClassRoomDetail" EntitySet="ClassRoomDetails" />
+          </AssociationSet>
+          <EntitySet Name="Resources" EntityType="ClassroomAllocationSystemModel.Resource" />
+          <AssociationSet Name="FK_ClassRoomDetails_Resource" Association="ClassroomAllocationSystemModel.FK_ClassRoomDetails_Resource">
+            <End Role="Resource" EntitySet="Resources" />
+            <End Role="ClassRoomDetail" EntitySet="ClassRoomDetails" />
+          </AssociationSet>
+          <FunctionImport Name="classroomsAndResource" ReturnType="Collection(ClassroomAllocationSystemModel.classroomsAndResource_Result1)" />
+          <FunctionImport Name="GetResourcebyName" ReturnType="Collection(ClassroomAllocationSystemModel.GetResourcebyName_Result)">
+            <Parameter Name="quantity1" Mode="In" Type="Int32" />
+            <Parameter Name="quantity2" Mode="In" Type="Int32" />
+            <Parameter Name="quantity3" Mode="In" Type="Int32" />
+          </FunctionImport>
+          </EntityContainer>
         <ComplexType Name="getAllRooms_Result">
           <Property Type="Int32" Name="ClassRoomId" Nullable="false" />
           <Property Type="String" Name="ClassRoomName" Nullable="false" MaxLength="20" />
@@ -583,7 +540,67 @@
           <Property Type="Int32" Name="ResourceQuantity" Nullable="false" />
           <Property Type="Int32" Name="ClassRoomId" Nullable="false" />
         </ComplexType>
-      </Schema>
+        <EntityType Name="ClassRoomDetail">
+          <Key>
+            <PropertyRef Name="DetailsId" />
+            <PropertyRef Name="ResourceId" />
+            <PropertyRef Name="ClassroomId" />
+          </Key>
+          <Property Name="DetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResourceId" Type="Int32" Nullable="false" />
+          <Property Name="ResourceQuantity" Type="Int32" Nullable="false" />
+          <Property Name="ClassroomId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClassRoom" Relationship="ClassroomAllocationSystemModel.FK_ClassRoomDetails_ClassRooms" FromRole="ClassRoomDetail" ToRole="ClassRoom" />
+          <NavigationProperty Name="Resource" Relationship="ClassroomAllocationSystemModel.FK_ClassRoomDetails_Resource" FromRole="ClassRoomDetail" ToRole="Resource" />
+        </EntityType>
+        <Association Name="FK_ClassRoomDetails_ClassRooms">
+          <End Type="ClassroomAllocationSystemModel.ClassRoom" Role="ClassRoom" Multiplicity="1" />
+          <End Type="ClassroomAllocationSystemModel.ClassRoomDetail" Role="ClassRoomDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassRoom">
+              <PropertyRef Name="ClassRoomId" />
+            </Principal>
+            <Dependent Role="ClassRoomDetail">
+              <PropertyRef Name="ClassroomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResourceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ClassRoomDetails" Relationship="ClassroomAllocationSystemModel.FK_ClassRoomDetails_Resource" FromRole="Resource" ToRole="ClassRoomDetail" />
+        </EntityType>
+        <Association Name="FK_ClassRoomDetails_Resource">
+          <End Type="ClassroomAllocationSystemModel.Resource" Role="Resource" Multiplicity="1" />
+          <End Type="ClassroomAllocationSystemModel.ClassRoomDetail" Role="ClassRoomDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resource">
+              <PropertyRef Name="ResourceId" />
+            </Principal>
+            <Dependent Role="ClassRoomDetail">
+              <PropertyRef Name="ResourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="classroomsAndResource_Result">
+          <Property Type="String" Name="ClassRoomName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ResourceName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ResourceQuantity" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="classroomsAndResource_Result1">
+          <Property Type="Int32" Name="DetailsId" Nullable="false" />
+          <Property Type="String" Name="ClassRoomName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ResourceName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ResourceQuantity" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetResourcebyName_Result">
+          <Property Type="String" Name="classicid" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="cid" Nullable="false" />
+        </ComplexType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -609,16 +626,6 @@
                 <ScalarProperty Name="Starttime" ColumnName="Starttime" />
                 <ScalarProperty Name="Endtime" ColumnName="Endtime" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ClassRoomDetails">
-            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.ClassRoomDetail">
-              <MappingFragment StoreEntitySet="ClassRoomDetails">
-                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
-                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
-                <ScalarProperty Name="ResourceQuantity" ColumnName="ResourceQuantity" />
-                <ScalarProperty Name="ClassroomId" ColumnName="ClassroomId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -663,14 +670,6 @@
               <MappingFragment StoreEntitySet="Questions">
                 <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
                 <ScalarProperty Name="Question1" ColumnName="Question" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Resources">
-            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.Resource">
-              <MappingFragment StoreEntitySet="Resources">
-                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
-                <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -725,7 +724,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetResource" FunctionName="ClassroomAllocationSystemModel.Store.GetResource" />
-          <FunctionImportMapping FunctionImportName="GetResourcebyName" FunctionName="ClassroomAllocationSystemModel.Store.GetResourcebyName" />
           <FunctionImportMapping FunctionImportName="ValidateBookingClassroom" FunctionName="ClassroomAllocationSystemModel.Store.ValidateBookingClassroom" />
           <FunctionImportMapping FunctionImportName="InsertFeedback" FunctionName="ClassroomAllocationSystemModel.Store.InsertFeedback" />
           <FunctionImportMapping FunctionImportName="getResourcesbyClassroom" FunctionName="ClassroomAllocationSystemModel.Store.getResourcesbyClassroom">
@@ -734,6 +732,42 @@
                 <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
                 <ScalarProperty Name="ResourceQuantity" ColumnName="ResourceQuantity" />
                 <ScalarProperty Name="ClassRoomId" ColumnName="ClassRoomId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ClassRoomDetails">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.ClassRoomDetail">
+              <MappingFragment StoreEntitySet="ClassRoomDetails">
+                <ScalarProperty Name="ClassroomId" ColumnName="ClassroomId" />
+                <ScalarProperty Name="ResourceQuantity" ColumnName="ResourceQuantity" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resources">
+            <EntityTypeMapping TypeName="ClassroomAllocationSystemModel.Resource">
+              <MappingFragment StoreEntitySet="Resources">
+                <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="classroomsAndResource" FunctionName="ClassroomAllocationSystemModel.Store.classroomsAndResource">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClassroomAllocationSystemModel.classroomsAndResource_Result1">
+                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
+                <ScalarProperty Name="ClassRoomName" ColumnName="ClassRoomName" />
+                <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+                <ScalarProperty Name="ResourceQuantity" ColumnName="ResourceQuantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetResourcebyName" FunctionName="ClassroomAllocationSystemModel.Store.GetResourcebyName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClassroomAllocationSystemModel.GetResourcebyName_Result">
+                <ScalarProperty Name="classicid" ColumnName="classicid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
