@@ -62,11 +62,20 @@ namespace MVCEventCalendar.Controllers
         [HttpPost]
         public ActionResult Register(FormCollection formCollection)
         {
+            try
+            {
+
             int empId = Convert.ToInt32(formCollection["EmployeeNumber"]);
+                string uname = formCollection["NewUsername"];
 
             //check the record is already available or not
-            var checkRegistration = entities.UserRegistrationDetails.Where(q => q.EmployeeNumber == empId).FirstOrDefault();
-            if (checkRegistration == null)
+                var checkRegistration = entities.UserRegistrationDetails.Where(q => q.EmployeeNumber == empId).FirstOrDefault();
+
+             var username = entities.UserRegistrationDetails.Where(q => q.Username == uname).FirstOrDefault();
+
+
+
+                if (checkRegistration == null && username==null)
             {
                 //inserting data into User registration details table
                 UserRegistrationDetail user = new UserRegistrationDetail();
@@ -97,11 +106,17 @@ namespace MVCEventCalendar.Controllers
                 //   Content("<script language='javascript' type='text/javascript'>alert('This EmployeeId already Registered');window.location = "Index";</script>");
 
 
-                return Content("<script language='javascript' type='text/javascript'>alert('This EmployeeId already Registered');window.location = 'Index';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('This Employee already Registered');window.location = 'Index';</script>");
 
             }
 
 
+            }
+            catch (Exception)
+            {
+
+                return Content("<script language='javascript' type='text/javascript'>alert('This Username already Registered');window.location = 'Index';</script>");
+            }
 
 
         }
